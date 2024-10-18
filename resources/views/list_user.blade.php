@@ -28,38 +28,95 @@
         background-color: #e0c3fc; /* Efek hover dengan warna ungu lebih terang */
     }
 
-    /* Gaya untuk tombol */
-    .btn-primary {
-        margin-right: 5px;
-        background-color: #6a0dad; /* Warna ungu untuk tombol */
-        border-color: #6a0dad;
+    /* Gaya untuk teks List Data */
+    .page-title {
+        font-size: 28px;
+        color: #6a0dad; /* Warna ungu */
+        text-align: center;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    /* Gaya untuk tombol Tambah Pengguna Baru */
+    .btn-add-user {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #6a0dad; /* Warna ungu */
         color: white;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 6px;
         transition: background-color 0.3s ease;
+        margin-bottom: 20px;
     }
 
-    .btn-primary:hover {
-        background-color: #9b5de5; /* Warna hover tombol lebih terang */
-        border-color: #9b5de5;
+    .btn-add-user:hover {
+        background-color: #9b5de5; /* Warna hover ungu lebih terang */
     }
 
-    .btn-danger {
+    /* Gaya untuk tombol View, Edit, dan Delete */
+    .btn-view, .btn-edit, .btn-delete {
+        padding: 8px 15px;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 6px;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .btn-view {
+        background-color: #5e60ce; /* Warna ungu tua untuk tombol View */
+    }
+
+    .btn-view:hover {
+        background-color: #7b2cbf; /* Warna hover ungu lebih terang */
+        transform: scale(1.05); /* Efek hover membesar */
+    }
+
+    .btn-edit {
+        background-color: #4a00e0; /* Warna ungu tua untuk tombol Edit */
         margin-left: 5px;
-        background-color: #d16ba5; /* Warna ungu kemerahan untuk tombol hapus */
-        border-color: #d16ba5;
-        color: white;
-        transition: background-color 0.3s ease;
     }
 
-    .btn-danger:hover {
-        background-color: #ea86c3; /* Warna hover tombol lebih terang */
-        border-color: #ea86c3;
+    .btn-edit:hover {
+        background-color: #7209b7; /* Warna hover ungu lebih terang */
+        transform: scale(1.05); /* Efek hover membesar */
     }
 
-    /* Gaya untuk tampilan tombol aktif */
-    button:active {
+    .btn-delete {
+        background-color: #d16ba5; /* Warna ungu kemerahan untuk tombol Delete */
+        margin-left: 5px;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .btn-delete:hover {
+        background-color: #ea86c3; /* Warna hover ungu lebih terang */
+        transform: scale(1.05); /* Efek hover membesar */
+    }
+
+    /* Gaya untuk tombol saat di-klik */
+    button:active, .btn-add-user:active, .btn-view:active, .btn-edit:active, .btn-delete:active {
         transform: scale(0.98);
     }
+
+    /* Gaya untuk kotak action tombol */
+    .action-buttons {
+        display: flex;
+        gap: 5px;
+    }
 </style>
+
+
+<br>
+<div class="page-title">List Data</div>
+
+<!-- Tombol Tambah Pengguna Baru -->
+<a href="{{ route('users.create') }}" class="btn-add-user mb-3">Tambah Pengguna Baru</a>
 
 <table>
     <thead>
@@ -68,6 +125,7 @@
             <th>Nama</th>
             <th>NPM</th>
             <th>Kelas</th>
+            <th>Foto</th>
             <th>Aksi</th>
         </tr>
     </thead>
@@ -79,12 +137,27 @@
                 <td>{{ $user->npm }}</td>
                 <td>{{ $user->kelas->nama_kelas ?? 'Kelas Tidak Ditemukan' }}</td>
                 <td>
-                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary">Edit</a>
-                    <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
-                    </form>
+                    @if($user->foto)
+                        <img src="{{ asset($user->foto ?? 'uploads/img/default.jpg') }}" alt="Foto Pengguna" width="100">
+                    @else
+                        <span>Foto tidak tersedia</span>
+                    @endif
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <!-- Tombol View sesuai instruksi pada gambar -->
+                        <a href="{{ route('users.show', $user->id) }}" class="btn-view">View</a>
+
+                        <!-- Tombol Edit -->
+                        <a href="{{ route('users.edit', $user->id) }}" class="btn-edit">Edit</a>
+
+                        <!-- Tombol Hapus -->
+                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         @endforeach
