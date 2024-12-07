@@ -99,6 +99,7 @@ class UserController extends Controller
             'nama' => $request->input('nama'),
             'npm' => $request->input('npm'),
             'nama_kelas' => $request->input('kelas_id') 
+            
         ]);
     }
 

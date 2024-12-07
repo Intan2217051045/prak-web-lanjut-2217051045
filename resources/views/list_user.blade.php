@@ -125,7 +125,7 @@
             <th>Nama</th>
             <th>NPM</th>
             <th>Kelas</th>
-            <th>Foto</th>
+            <th>fakultas</th>
             <th>Aksi</th>
         </tr>
     </thead>
@@ -136,7 +136,7 @@
                 <td>{{ $user->nama }}</td>
                 <td>{{ $user->npm }}</td>
                 <td>{{ $user->kelas->nama_kelas ?? 'Kelas Tidak Ditemukan' }}</td>
-                <td>
+                <td>{{ $user->nama_fakultas}}</td>
                     @if($user->foto)
                         <img src="{{ asset($user->foto ?? 'uploads/img/default.jpg') }}" alt="Foto Pengguna" width="100">
                     @else

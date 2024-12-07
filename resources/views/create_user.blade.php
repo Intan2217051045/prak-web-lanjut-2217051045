@@ -100,6 +100,8 @@
         <label for="npm">NPM:</label>
         <input type="text" id="npm" name="npm" required>
 
+
+
         <label for="kelas_id">Kelas:</label>
         <select id="kelas_id" name="kelas_id" required>
             <option value="" disabled selected>Pilih Kelas</option>
@@ -107,6 +109,17 @@
                 <option value="{{ $kelasItem->id }}">{{ $kelasItem->nama_kelas }}</option>
             @endforeach
         </select>
+        <!-- <label for="jurusan_id">Jurusan:</label>
+                    <select name="jurusan_id" id="jurusan_id"
+                        class="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+                        <option value="" disabled selected>-- Pilih Jurusan --</option>
+                        @foreach ($jurusan as $jurusanItem)
+                            <option value="{{ $jurusanItem->id }}"
+                                {{ old('jurusan_id') == $jurusanItem->id ? 'selected' : '' }}>
+                                {{ $jurusanItem->nama_jurusan }}
+                            </option>
+                        @endforeach
+                    </select> -->
 
         <label for="foto">Foto:</label>
         <input type="file" id="foto" name="foto"><br><br>
